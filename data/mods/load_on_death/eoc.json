@@ -1,0 +1,62 @@
+[
+  {
+    "//": "Load on Death. CDDA cannot start a load from JSON, so on death we hold the death off and the player loads with debug menu > Game > Quickload (the Quickload key is compiled out of release builds). CDDA は JSON からロードを始められないので、死亡を保留し、プレイヤーがデバッグメニュー > ゲーム > クイックロードで読み込む（リリース版ではクイックロードのキーが無効）。",
+    "//2": "u_ldl_pending = 1 while the death is on hold, u_ldl_since = turn it started, u_ldl_final = 1 forces a normal death. 保留中は u_ldl_pending=1、保留開始ターンは u_ldl_since、u_ldl_final=1 で通常どおり死ぬ。",
+    "//3": "Assisted-by: Claude:claude-opus-5-5",
+    "type": "effect_on_condition",
+    "id": "ldl_on_avatar_death",
+    "//4": "AVATAR_DEATH runs after every PREVENT_DEATH (other mods' revivals) and after the tombstone screen. AVATAR_DEATH は他MODの PREVENT_DEATH（蘇生系）と墓標画面の後に動く。",
+    "eoc_type": "AVATAR_DEATH",
+    "condition": {
+      "and": [
+        { "math": [ "u_ldl_final != 1" ] },
+        {
+          "//": "Still dead? (Another AVATAR_DEATH, e.g. taking over a follower, may have run first.) まだ死んでいるか（仲間に乗り移った後などは聞かない）。",
+          "or": [ { "math": [ "u_hp('head') <= 0" ] }, { "math": [ "u_hp('torso') <= 0" ] } ]
+        },
+        { "u_query": "Undo this death and return to your last save?  (No: die as usual)", "default": false }
+      ]
+    },
+    "effect": [
+      "u_prevent_death",
+      { "math": [ "u_ldl_pending = 1" ] },
+      { "math": [ "u_ldl_since = time('now')" ] },
+      {
+        "u_message": "Your death is on hold.  To go back to your last save, open the debug menu and choose Game… → Quickload.  If the debug menu has no key, set one in the keybindings menu (Esc menu).  If time passes first, you die again.  A save made now ends in death when loaded.",
+        "popup": true
+      }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "ldl_time_passed",
+    "//": "No playing on while dead: if 5 seconds pass without loading, die again (the question comes back). 死んだまま遊ばせない。5秒経ってもロードしなければ再び死ぬ（質問も再表示）。",
+    "//2": "Assisted-by: Claude:claude-opus-5-5",
+    "eoc_type": "RECURRING",
+    "recurrence": 1,
+    "global": true,
+    "condition": {
+      "and": [ { "math": [ "u_ldl_pending == 1" ] }, { "math": [ "time('now') - u_ldl_since >= time('5 s')" ] } ]
+    },
+    "effect": [
+      { "math": [ "u_ldl_pending = 0" ] },
+      { "u_message": "Time passed before you loaded.", "type": "bad" },
+      { "math": [ "u_hp('torso') = 0" ] }
+    ]
+  },
+  {
+    "type": "effect_on_condition",
+    "id": "ldl_on_game_load",
+    "//": "This save was written while the death was on hold (manual save or autosave): there is nothing to go back to, so the character dies. 死亡保留中に書かれたセーブ（手動・オートセーブ）。戻る先が無いので通常どおり死亡させる。",
+    "//2": "Assisted-by: Claude:claude-opus-5-5",
+    "eoc_type": "EVENT",
+    "required_event": "game_load",
+    "condition": { "math": [ "u_ldl_pending == 1" ] },
+    "effect": [
+      { "math": [ "u_ldl_pending = 0" ] },
+      { "math": [ "u_ldl_final = 1" ] },
+      { "u_message": "This save was made after your death.  Your character dies.", "popup": true },
+      { "math": [ "u_hp('torso') = 0" ] }
+    ]
+  }
+]

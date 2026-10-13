@@ -1,0 +1,14 @@
+[
+  {
+    "//": "Load on Death for CDDA 0.I-1 (Ito-1). JSON (EOC) only. 死亡時ロード（CDDA 0.I-1 用、JSON/EOC のみ）。",
+    "//2": "Assisted-by: Claude:claude-opus-5-5",
+    "type": "MOD_INFO",
+    "id": "load_on_death",
+    "name": "Load on Death",
+    "authors": [ "sagittarius72" ],
+    "description": "When you die, you can choose to go back to your last save instead.  Needs a key bound to the debug menu.",
+    "category": "misc",
+    "dependencies": [ "dda" ],
+    "version": "1.0"
+  }
+]

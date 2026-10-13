@@ -1,0 +1,39 @@
+# Japanese translation for the "Load on Death" mod (CDDA 0.I-1).
+# Compiled to lang/mo/ja/LC_MESSAGES/load_on_death.mo
+# Assisted-by: Claude:claude-opus-5-5
+msgid ""
+msgstr ""
+"Project-Id-Version: load_on_death\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Load on Death"
+msgstr "死亡時ロード"
+
+msgid ""
+"When you die, you can choose to go back to your last save instead.  Needs a "
+"key bound to the debug menu."
+msgstr ""
+"死んだとき、代わりに最後のセーブへ戻ることを選べる。デバッグメニューにキーの割り当てが必要。"
+
+msgid "Undo this death and return to your last save?  (No: die as usual)"
+msgstr "この死を取り消して、最後のセーブに戻りますか？（いいえ：通常どおり死亡）"
+
+msgid ""
+"Your death is on hold.  To go back to your last save, open the debug menu "
+"and choose Game… → Quickload.  If the debug menu has no key, set one in the "
+"keybindings menu (Esc menu).  If time passes first, you die again.  A save "
+"made now ends in death when loaded."
+msgstr ""
+"死亡は保留中です。最後のセーブに戻るには、デバッグメニューを開いて「ゲーム...」→「クイックロード」を"
+"選んでください。デバッグメニューにキーが無ければ、Escメニューの「キー割当」で設定してください。"
+"先に時間が経つと再び死亡します。今セーブすると、そのセーブはロード時に死亡します。"
+
+msgid "Time passed before you loaded."
+msgstr "ロードする前に時間が経ってしまった。"
+
+msgid "This save was made after your death.  Your character dies."
+msgstr "このセーブは死亡後に作られたものです。キャラクターは死亡します。"
